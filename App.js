@@ -1,31 +1,18 @@
 import { StatusBar } from "expo-status-bar";
-import { useEffect, useState } from "react";
-import { StyleSheet, Text, View, Image } from "react-native";
-import { getLatestGames } from "./lib/metacritic";
+import { StyleSheet, View } from "react-native";
+import { SafeAreaProvider } from "react-native-safe-area-context";
 
-// const icon = require("./assets/favicon.png");
+import { Main } from "./components/Main";
+import { Logo } from "./components/Logo";
 
 export default function App() {
-  const [games, setGames] = useState([]);
-
-  useEffect(() => {
-    getLatestGames().then((games) => setGames(games));
-  }, []);
-
   return (
-    <View style={styles.container}>
-      <StatusBar style="light" />
-
-      {games.map((game) => (
-        <View key={game.slug} style={styles.card}>
-          <Image
-            source={{ uri: game.image }}
-            style={{ width: 107, height: 147, borderRadius: 10 }}
-          />
-          <Text style={styles.title}>{game.title}</Text>
-        </View>
-      ))}
-    </View>
+    <SafeAreaProvider>
+      <View style={styles.container}>
+        <StatusBar style="light" />
+        <Main />
+      </View>
+    </SafeAreaProvider>
   );
 }
 
@@ -35,18 +22,6 @@ const styles = StyleSheet.create({
     backgroundColor: "#000",
     alignItems: "center",
     justifyContent: "center",
-  },
-  card: {
-    backgroundColor: "#222",
-    padding: 10,
-    marginVertical: 10,
-    borderRadius: 10,
-    alignItems: "center",
-  },
-  title: {
-    fontSize: 16,
-    fontWeight: "bold",
-    color: "#fff",
-    marginTop: 5,
+    paddingHorizontal: 12,
   },
 });
